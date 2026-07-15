@@ -10,11 +10,13 @@
   
   function DisplayCharState:enter(params)
     self.chars = params.chars or ALPHABET-- the possible options for the correct character
-    self.character = table.randomChoice(self.chars)
+    self.character = params.character or table.randomChoice(self.chars)
     self.lineX, self.lineY = 0, 0
     self.lives = params.lives or 3
     self.level = params.level or 1
-    Timer.tween(2, {[self] = {lineY = WINDOW_HEIGHT}}):finish(function() gStateMachine:change('quiz', {charDisplayed = self.character, lives = self.lives, level = self.level}) end)
+    self.options = params.options or {}
+    self.replays = params.replays
+    Timer.tween(1, {[self] = {lineY = WINDOW_HEIGHT}}):finish(function() gStateMachine:change('quiz', {charDisplayed = self.character, lives = self.lives, level = self.level, options = self.options, replays = self.replays}) end)
   end
   
   function DisplayCharState:update(dt)

@@ -22,18 +22,25 @@ function love.load()
             large = love.graphics.newFont('fonts/Cantarell-Regular.ttf', 80),
             character = love.graphics.newFont('fonts/Cantarell-Regular.ttf', 700)}
           
+  sfx = {correct = love.audio.newSource('sounds/correct.wav', 'static'),
+          incorrect = love.audio.newSource('sounds/incorrect.mp3', 'static')}
+        
   local replayCanvas = love.graphics.newCanvas(100, 100)
+  local img = love.graphics.newImage('graphics/replay.png')
   love.graphics.setCanvas(replayCanvas)
-  love.graphics.clear(COLORS.grey)
+  
   love.graphics.setColor(COLORS.green)
-  love.graphics.polygon('fill', 35, 30, 80, 50, 35, 70)--triangle
-  love.graphics.arc('line', 'open', 50, 50, 45, math.pi, -math.pi * 0.85)
-  love.graphics.setColor(COLORS.yellow)
-  love.graphics.line(0, 60, 5, 50, 12, 60)
+  
+  love.graphics.draw(img, 0, 0, 0, 100/512, 100/512)
   love.graphics.setCanvas()
+  love.graphics.setColor(COLORS.white)
+  
   local imageData = replayCanvas:newImageData()
   
-  gTextures = {replayImg = love.graphics.newImage(imageData)}
+ 
+  gTextures = {replayImg = love.graphics.newImage(imageData),
+                greenCheck = love.graphics.newImage('graphics/green_checkmark.png'),
+                redX = love.graphics.newImage('graphics/red_cross.png')}
           
   gStateMachine = StateMachine{mainMenu = function() return MainMenuState() end,
                                 displayChar = function() return DisplayCharState() end,
